@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.fomin.demo.retrofit.bean";  // 包名路径
+option java_outer_classname = "NetworkProtos";
+option objc_class_prefix = "";
+
+package network;
+
+// 设备类型
+enum PBDeviceType {
+    DEVICE_ANDROID = 0;                      // 安卓
+    DEVICE_IOS = 1;                          // 苹果
+    DEVICE_PC = 2;                           // PC
+}
+
+// 设备
+message PBDevice {
+    string deviceId = 1;                    // 设备ID
+    string deviceOs = 2;                    // 设备操作系统
+    string deviceModel = 3;                 // 设备模型
+    PBDeviceType deviceType = 4;             // 设备类型，参考PBDeviceType
+}
+
+// 网络类型
+enum PBNetworkType {
+    NET_UNKNOWN = 0;                         // 未知网络
+    NET_WIFI = 1;                            // WIFI
+    NET_2G = 2;                              // 2G网络
+    NET_3G = 3;                              // 3G网络
+    NET_4G = 4;                              // 4G网络
+}
+
+// APP信息
+message PBAppInfo {
+    string versionName = 1;                 // 应用程序版本名
+    uint32 versionCode = 2;                 // 应用程序版本号
+    PBNetworkType network = 3;               // 网络信息
+    PBDevice device = 4;                     // 设备信息
+}
+
+// 消息请求包
+message PBRequest {
+    uint32 type = 1;                        // 消息类型
+    bytes messageData = 2;                  // 请求数据
+    uint64 timestamp = 3;                   // 客户端时间戳
+    PBAppInfo appInfo = 4;                   // APP信息
+}
+
+// 消息响应包
+message PBResponse {
+    uint32 type = 1;                        // 消息类型
+    bytes messageData = 2;                  // 返回数据
+    uint32 resultCode = 3;                  // 返回的结果码
+    string resultInfo = 4;                  // 返回的结果消息提示文本（用于错误提示）
+}
